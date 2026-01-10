@@ -16,13 +16,10 @@
             background-color: #000;
         }
 
-        /* Camada da Imagem Inicial */
         .background-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('MARANATA.jpg');
             background-size: cover;
             background-position: center;
@@ -33,19 +30,15 @@
             z-index: 2;
         }
 
-        /* Camada do Vídeo */
         #video-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 1;
         }
 
         video {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             object-fit: cover;
         }
 
@@ -53,9 +46,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             width: 100%;
-            gap: 15px; /* Espaço entre os elementos */
+            gap: 10px;
         }
 
         .welcome-text {
@@ -74,7 +67,6 @@
             animation: bounce 2s infinite;
         }
 
-        /* Botão Principal (Texto) */
         .btn-maranata {
             background: none;
             border: none;
@@ -85,27 +77,34 @@
             text-shadow: 2px 2px 15px rgba(0, 0, 0, 1);
             transition: transform 0.3s ease;
             text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        /* Botão Instagram */
-        .btn-instagram {
-            background-color: #5D4037;
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 18px;
+        /* Container dos ícones sociais */
+        .social-icons {
             display: flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+
+        .icon-link {
+            color: white;
+            background-color: #5D4037; /* Marrom */
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
+            font-size: 24px;
+            text-decoration: none;
             transition: background 0.3s, transform 0.2s;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .btn-instagram:hover {
+        .icon-link:hover {
             background-color: #795548;
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .hidden {
@@ -125,16 +124,20 @@
 <div class="background-container" id="bg-image">
     <div class="content-group">
         <p class="welcome-text">É uma alegria ter você aqui! ❤️‍🔥</p>
-
         <div class="click-here">Clique abaixo 👇</div>
 
         <button class="btn-maranata" onclick="startExperience()">
             MARANATA ORA VEM!
         </button>
 
-        <a href="https://www.instagram.com/celula_maranata16?igsh=ZW1jNWppNHJzaGR0" target="_blank" class="btn-instagram">
-            <i class="fab fa-instagram"></i> Instagram
-        </a>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/celula_maranata16?igsh=ZW1jNWppNHJzaGR0" target="_blank" class="icon-link" onclick="stopMusic()">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://chat.whatsapp.com/Jp568SLjkdFEhqbmHX43Wv" target="_blank" class="icon-link" onclick="stopMusic()">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
     </div>
 </div>
 
@@ -159,11 +162,15 @@
         audio.play();
     }
 
-    // Quando o vídeo acabar, volta para a tela inicial
+    function stopMusic() {
+        audio.pause();
+    }
+
     video.onended = function() {
         imagemFundo.classList.remove("hidden");
         audio.pause();
-        audio.currentTime = 0; // Reinicia a música para a próxima vez
+        audio.currentTime = 0;
+        video.currentTime = 0;
     };
 </script>
 
