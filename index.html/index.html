@@ -12,66 +12,93 @@
             width: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
+            background-color: #000;
         }
 
-        /* Container com a imagem em tela cheia */
+        /* Camada da Imagem Inicial */
         .background-container {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.6)), url('MARANATA.jpg');
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7)), url('MARANATA.jpg');
             background-size: cover;
             background-position: center;
-            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: flex-end;
+            transition: opacity 1s ease;
+            z-index: 2;
+        }
+
+        /* Camada do Vídeo */
+        #video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .content-group {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 40px; /* Espaço do rodapé */
+            margin-bottom: 60px;
             width: 100%;
         }
 
         .welcome-text {
             color: white;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             margin-bottom: 5px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
             text-align: center;
         }
 
-        /* Indicador: Clique abaixo + Seta */
-        .click-indicator {
-            color: #D7CCC8; /* Tom marrom bem clarinho para destaque sutil */
+        /* Indicador de clique */
+        .click-here {
+            color: #D7CCC8;
             font-size: 16px;
-            margin-bottom: 10px;
+            font-weight: bold;
             text-transform: uppercase;
+            margin-bottom: 15px;
             letter-spacing: 1px;
-            animation: bounce 2s infinite; /* Efeito de pular suave */
+            animation: bounce 2s infinite;
         }
 
-        /* Texto principal clicável */
         .btn-maranata {
             background: none;
             border: none;
             color: white;
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 900;
             letter-spacing: 2px;
             cursor: pointer;
             text-shadow: 2px 2px 15px rgba(0, 0, 0, 1);
             transition: transform 0.3s ease;
             text-transform: uppercase;
-            padding: 10px;
         }
 
         .btn-maranata:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
-        /* Animação para a seta "pular" e chamar atenção */
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Animação da seta */
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
             40% {transform: translateY(-5px);}
@@ -81,18 +108,22 @@
 </head>
 <body>
 
-<div class="background-container">
+<div class="background-container" id="bg-image">
     <div class="content-group">
         <p class="welcome-text">É uma alegria ter você aqui! ❤️‍🔥</p>
-        
-        <div class="click-indicator">
-            Clique abaixo 👇
-        </div>
 
-        <button class="btn-maranata" onclick="playMusic()">
+        <div class="click-here">Clique abaixo 👇</div>
+
+        <button class="btn-maranata" onclick="startExperience()">
             MARANATA ORA VEM!
         </button>
     </div>
+</div>
+
+<div id="video-container">
+    <video id="meuVideo" playsinline muted loop>
+        <source src="video.mp4" type="video/mp4">
+    </video>
 </div>
 
 <audio id="louvor">
@@ -100,9 +131,17 @@
 </audio>
 
 <script>
-    function playMusic() {
+    function startExperience() {
+        const video = document.getElementById("meuVideo");
         const audio = document.getElementById("louvor");
-        audio.play();
+        const imagemFundo = document.getElementById("bg-image");
+
+        // Esconde a imagem e o texto
+        imagemFundo.classList.add("hidden");
+
+        // Inicia o visual e o som juntos
+        video.play();
+        audio.play().catch(e => console.log("Erro ao tocar áudio:", e));
     }
 </script>
 
